@@ -22,7 +22,6 @@ function specialChars()
 function fnKeys()
 {
     local ARR=(
-        "$(fn '`' "Esc")"
         "$(fn 'F1' "1")"
         "$(fn 'F2' "2")"
         "$(fn 'F3' "3")"
