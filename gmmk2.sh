@@ -11,6 +11,14 @@ function printArray()
         echo $elem
     done
 }
+function specialChars()
+{
+    local ARR=(
+        "$(fn '`' "Esc")"
+        "$(fn '~' "Shift + Esc")"
+    )
+    printArray "${ARR[@]}" 
+}
 function fnKeys()
 {
     local ARR=(
@@ -66,6 +74,7 @@ function volume()
     printArray "${ARR[@]}" 
 
 }
+specialChars
 fnKeys
 arrowKeys
 controlPad
