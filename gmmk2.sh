@@ -1,26 +1,22 @@
-function fn()
-{
+function fn() {
     local key=$1
     local mapping=$2
     echo "($key) -> [ Fn + $mapping ]"
 }
-function printArray()
-{
+function printArray() {
     local ARR=("$@")
     for elem in "${ARR[@]}"; do
         echo $elem
     done
 }
-function specialChars()
-{
+function specialChars() {
     local ARR=(
         "$(fn '`' "Esc")"
         "$(fn '~' "Shift + Esc")"
     )
-    printArray "${ARR[@]}" 
+    printArray "${ARR[@]}"
 }
-function fnKeys()
-{
+function fnKeys() {
     local ARR=(
         "$(fn 'F1' "1")"
         "$(fn 'F2' "2")"
@@ -35,46 +31,68 @@ function fnKeys()
         "$(fn 'F11' "-")"
         "$(fn 'F12' "+")"
     )
-    printArray "${ARR[@]}" 
+    printArray "${ARR[@]}"
 }
 
-function arrowKeys()
-{
+function arrowKeys() {
     local ARR=(
         "$(fn 'up' "I")"
         "$(fn 'left' "J")"
         "$(fn 'down' "K")"
         "$(fn 'right' "L")"
     )
-    printArray "${ARR[@]}" 
+    printArray "${ARR[@]}"
 }
-function controlPad()
-{
+function controlPad() {
     local ARR=(
-    "$(fn 'Insert' ";")"
-    "$(fn 'Delete' "'")"
-    "$(fn 'Home' "N")"
-    "$(fn 'End' "M")"
-    "$(fn 'PageUp' "U")"
-    "$(fn 'PageDown' "O")"
-    "$(fn 'PrntScrn' "P")"
-    "$(fn 'ScrollLk' "{")"
-    "$(fn 'Pause' "}")"
+        "$(fn 'Insert' ";")"
+        "$(fn 'Delete' "'")"
+        "$(fn 'Home' "N")"
+        "$(fn 'End' "M")"
+        "$(fn 'PageUp' "U")"
+        "$(fn 'PageDown' "O")"
+        "$(fn 'PrntScrn' "P")"
+        "$(fn 'ScrollLk' "{")"
+        "$(fn 'Pause' "}")"
     )
-    printArray "${ARR[@]}" 
+    printArray "${ARR[@]}"
 }
-function volume()
-{
+function volume() {
     local ARR=(
-    "$(fn 'Mute' ",")"
-    "$(fn 'Vol Down' ".")"
-    "$(fn 'Vol Up' "/")"
+        "$(fn 'Mute' ",")"
+        "$(fn 'Vol Down' ".")"
+        "$(fn 'Vol Up' "/")"
     )
-    printArray "${ARR[@]}" 
+    printArray "${ARR[@]}"
 
 }
-specialChars
-fnKeys
-arrowKeys
-controlPad
-volume
+function all() {
+    specialChars
+    fnKeys
+    arrowKeys
+    controlPad
+    volume
+}
+
+ARG=$1
+
+case $ARG in
+special)
+    secialChars
+    ;;
+fn)
+    fnKeys
+    ;;
+arrow)
+    arrowKeys
+    ;;
+control)
+    controlPad
+    ;;
+volume)
+    volume
+    ;;
+*)
+    [[ -z "$ARG" ]] && all || all | grep $ARG -iE
+    ;;
+esac
